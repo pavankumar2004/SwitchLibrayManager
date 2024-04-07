@@ -1,0 +1,54 @@
+/* Custom styles for the Switch_Titles_Database application */
+
+.description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  cursor: pointer;
+  margin-bottom: 10px; /* Spacing below each description for clarity */
+}
+
+.description.expanded {
+  -webkit-line-clamp: none;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+/* Styles for centrally displaying the Nintendo Switch Pro image on the welcome screen */
+.nintendo-switch-pro-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%; /* Adjust this value to change the image size */
+}
+
+/* Styles for fixed width columns in the game titles tables */
+.table .titleId, .table .name, .table .bannerUrl, .table .version, .table .publisher, .table .region, .table .size, .table .releaseDate {
+  width: 12.5%; /* Adjust these values as needed to fit the table layout */
+}
+
+@media (max-width: 768px) {
+  .table .titleId, .table .name, .table .bannerUrl, .table .version, .table .publisher, .table .region, .table .size, .table .releaseDate {
+    display: block; /* Adjusts table content to stack vertically on smaller screens */
+    width: 100%; /* Allows each table cell to expand to the full width of the container */
+    margin-bottom: 10px; /* Adds spacing between stacked cells for clarity */
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center; /* Centers pagination controls */
+  padding: 20px 0; /* Adds padding above and below the pagination controls */
+}
+
+.page-item.active .page-link {
+  background-color: #007bff; /* Sets the background color of the active page link */
+  border-color: #007bff; /* Sets the border color of the active page link */
+}
+
+.page-link {
+  margin: 0 5px; /* Adds horizontal spacing between pagination links */
+}

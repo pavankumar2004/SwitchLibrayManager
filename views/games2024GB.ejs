@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/_head.ejs') %>
+  <body>
+<%- include('partials/_header.ejs') %>
+    <main role="main" class="container mt-4">
+      <h2>Game Titles for 2024 - Europe (GB)</h2>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width: 20%;">ID</th>
+              <th style="width: 20%;">Name</th>
+              <th style="width: 20%;">Banner</th>
+              <th style="width: 20%;">Region</th>
+              <th style="width: 20%;">Release Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% gameTitles.forEach(function(title) { %>
+              <tr>
+                <td><%= title.titleId %></td>
+                <td class="no-wrap"><%= title.name %></td>
+                <td><img src="<%= title.bannerUrl %>" alt="Game Banner" style="width: 100px; height: 100px;"></td>
+                <td><%= title.region %></td>
+                <td><%= title.releaseDate %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+      <% if (gameTitles.length === 0) { %>
+        <p>No game titles found for the year 2024 in Europe. Please check back later or update the database.</p>
+      <% } else { %>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <% for(let i = 1; i <= totalPages && i <= 30; i++) { %>
+              <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                <a class="page-link" href="/games/year/2024/gb=<%= i %>"><%= i %></a>
+              </li>
+            <% } %>
+          </ul>
+        </nav>
+      <% } %>
+    </main>
+  </body>
+<%- include('partials/_footer.ejs') %>
+  <script src="/js/main.js"></script>
+  <script>
+    function toggleDescription(element) {
+      if (element.classList.contains('expanded')) {
+        element.classList.remove('expanded');
+      } else {
+        element.classList.add('expanded');
+      }
+    }
+  </script>
+  <style>
+    .description {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .description.expanded {
+      -webkit-line-clamp: none;
+    }
+    .no-wrap {
+      white-space: nowrap;
+    }
+  </style>
+</html>
