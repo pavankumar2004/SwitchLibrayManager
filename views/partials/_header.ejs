@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">Switch_Titles_Database</a>
+  <a class="navbar-brand" href="/">Switch-Titles-Database</a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -8,21 +8,10 @@
       <li class="nav-item">
         <a class="nav-link" href="/">Home</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
-          Games by Year
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="/games/year/2024">2024</a>
-          <a class="dropdown-item" href="/games/year/2023">2023</a>
-          <a class="dropdown-item" href="/games/year/2022">2022</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/games/year/2024/gb">2024 GB</a>
-          <a class="dropdown-item" href="/games/year/2024/jp">2024 JP</a>
-          <a class="dropdown-item" href="/games/year/2024/us">2024 US</a>
-        </div>
-      </li>
       <% if (session && session.userId) { %>
+      <li class="nav-item">
+        <a class="nav-link">Logged in as <%= session.username %></a> <!-- Assuming session.username is set during login -->
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="/auth/logout">Logout</a>
       </li>

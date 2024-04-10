@@ -52,3 +52,47 @@
 .page-link {
   margin: 0 5px; /* Adds horizontal spacing between pagination links */
 }
+
+/* Styles for progress bars */
+.progress-bar-games{
+  height: 20px; /* Sets the height of the progress bars */
+}
+
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+#file-list {
+  margin-top: 20px;
+}
+
+.file-item {
+  cursor: pointer;
+  padding: 5px;
+}
+
+.file-item:hover {
+  background-color: #f0f0f0;
+}
+
+.file-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 20px;
+}
+.file-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+.file-name {
+  font-weight: bold;
+}
+.file-date {
+  color: #888;
+}
+.view-link {
+  display: block;
+  margin-top: 10px;
+}

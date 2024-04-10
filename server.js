@@ -6,8 +6,9 @@ const session = require("express-session");
 const MongoStore = require('connect-mongo');
 const authRoutes = require("./routes/authRoutes");
 const gameRoutes = require("./routes/gameRoutes");
-// Removed unused import updateDatabase
-const GameTitle = require('./models/GameTitle'); // Added to use GameTitle model for counting documents
+
+const fs = require('fs');
+const path = require('path');
 
 if (!process.env.DATABASE_URL || !process.env.SESSION_SECRET) {
   console.error("Error: config environment variables not set. Please create/edit .env configuration file.");
@@ -64,12 +65,11 @@ app.use((req, res, next) => {
     console.log("Session created at: ", new Date().toISOString());
   } else {
     sess.views++;
-    console.log(
-      `Session accessed again at: ${new Date().toISOString()}, Views: ${sess.views}, User ID: ${sess.userId || '(unauthenticated)'}`,
-    );
   }
   next();
 });
+
+
 
 // Middleware to clear existing login if exists, excluding certain paths
 app.use((req, res, next) => {
@@ -118,4 +118,4 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
-});
+})

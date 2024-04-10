@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/_head.ejs') %>
+<body>
+<%- include('partials/_header.ejs') %>
+<main role="main" class="container mt-4">
+    <h2>Related Content for <%= game.name %></h2>
+    <div>
+        <h3>Game Details</h3>
+        <p><strong>Title:</strong> <%= game.name %></p>
+        <p><strong>Release Date:</strong> <%= game.releaseDate %></p>
+        <p><strong>Description:</strong> <%= game.description %></p>
+    </div>
+    <% if (updates.length > 0) { %>
+    <div>
+        <h3>Updates</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Version</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% updates.forEach(function(update) { %>
+                <tr>
+                    <td><%= update.titleId %></td>
+                    <td><%= update.version %></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+    <% } %>
+    <% if (dlcs.length > 0) { %>
+    <div>
+        <h3>DLC</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Release Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% dlcs.forEach(function(dlc) { %>
+                <tr>
+                    <td><%= dlc.titleId %></td>
+                    <td><%= dlc.name %></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+    <% } %>
+    <% if (miscs.length > 0) { %>
+    <div>
+        <h3>Miscellaneous</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Release Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% miscs.forEach(function(misc) { %>
+                <tr>
+                    <td><%= misc.titleId %></td>
+                    <td><%= misc.name %></td>
+                    <td><%= misc.releaseDate %></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+    <% } %>
+</main>
+<%- include('partials/_footer.ejs') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

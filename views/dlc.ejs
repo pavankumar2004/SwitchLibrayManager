@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/_head.ejs') %>
+<body>
+<%- include('partials/_header.ejs') %>
+<main role="main" class="container mt-4">
+    <h2>DLC Titles</h2>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Banner</th>
+                <th>Region</th>
+                <th>Release Date</th>
+                <th>Related Content</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if (dlcs && dlcs.length > 0) { %>
+                <% dlcs.forEach(function(dlc) { %>
+                    <tr>
+                        <td><%= dlc.titleId %></td>
+                        <td><%= dlc.name %></td>
+                        <td><img src="<%= dlc.bannerUrl %>" alt="DLC Banner" style="width: 100px; height: 100px;"></td>
+                        <td><%= dlc.region %></td>
+                        <td><%= dlc.releaseDate %></td>
+                        <td><a href="/related/<%= dlc.titleId.substring(0, 12) %>">View Related</a></td>
+                    </tr>
+                <% }); %>
+            <% } else { %>
+                <tr>
+                    <td colspan="6">No DLC titles found.</td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <% for(let i = 1; i <= totalPages && i <= 30; i++) { %>
+                <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                    <a class="page-link" href="/dlc?page=<%= i %>"><%= i %></a>
+                </li>
+            <% } %>
+            <% if (totalPages > 30) { %>
+                <li class="page-item">
+                    <a class="page-link" href="/dlc?page=<%= totalPages %>">Last</a>
+                </li>
+            <% } %>
+        </ul>
+    </nav>
+</main>
+<%- include('partials/_footer.ejs') %>
+<script src="/js/main.js"></script>
+</body>
+</html>
