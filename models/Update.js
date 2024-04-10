@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const titleSchema = new mongoose.Schema({
+const updateSchema = new mongoose.Schema({
   titleId: { type: String, required: true, unique: true },
   name: { type: String, required: false, unique: false },
   bannerUrl: { type: String, required: false, unique: false },
@@ -10,8 +10,22 @@ const titleSchema = new mongoose.Schema({
   intro: { type: String, required: false, unique: false },
   description: { type: String, required: false, unique: false },
   releaseDate: { type: String, required: false, unique: false },
+  version: { type: Number, required: false },
+  size: { type: BigInt, required: false },  
 });
 
-const GameTitle = mongoose.model('GameTitle', titleSchema);
+updateSchema.pre('save', async function(next) {
+  // Ensure titleId ends with '800'
+  if (!this.titleId.endsWith('800')) {
+    const error = new Error('Update titleId must end with 800');
+    console.error('Error saving update:', error.message);
+    next(error);
+  } else {
+    console.log(`Saving update with titleId: ${this.titleId}`);
+    next();
+  }
+});
 
-module.exports = GameTitle;
+const Update = mongoose.model('Update', updateSchema);
+
+module.exports = Update;

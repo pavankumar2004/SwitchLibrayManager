@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/_head.ejs') %>
+<body>
+<%- include('partials/_header.ejs') %>
+<main role="main" class="container mt-4">
+    <h2>Game Titles</h2>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Banner</th>
+                <th>Region</th>
+                <th>Version</th>
+                <th>Size</th>
+                <th>Release Date</th>
+                <th>Related</th>
+            </tr>
+            </thead>
+            <tbody>
+                <% games.forEach(function(game) { %>
+                    <tr>
+                        <td><%= game.titleId %></td>
+                        <td><%= game.name %></td>
+                        <td><img src="<%= game.bannerUrl %>" alt="Game Banner" style="width: 100px; height: 100px;"></td>
+                        <td><%= game.region %></td>
+                        <td><%= game.version %></td>
+                        <td data-size="<%= game.size %>"><%= game.size %></td>
+                        <td><%= game.releaseDate %></td>
+                        <td><a href="/related/<%= game.titleId.substring(0, 12) %>">View Related</a></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <% for(let i = 1; i <= totalPages && i <= 30; i++) { %>
+                <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                    <a class="page-link" href="/games?page=<%= i %>"><%= i %></a>
+                </li>
+            <% } %>
+            <% if (totalPages > 30) { %>
+                <li class="page-item">
+                    <a class="page-link" href="/games?page=<%= totalPages %>">...</a>
+                </li>
+            <% } %>
+        </ul>
+    </nav>
+</main>
+<%- include('partials/_footer.ejs') %>
+<script src="/js/main.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sizeElements = document.querySelectorAll('[data-size]');
+        sizeElements.forEach(function(element) {
+            const size = element.getAttribute('data-size');
+            element.textContent = formatBytes(parseInt(size, 10));
+        });
+    });
+</script>
+</body>
+</html>
