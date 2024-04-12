@@ -63,36 +63,19 @@ body {
   font-family: Arial, sans-serif;
 }
 
-#file-list {
-  margin-top: 20px;
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.file-item {
-  cursor: pointer;
-  padding: 5px;
-}
-
-.file-item:hover {
-  background-color: #f0f0f0;
-}
-
-.file-grid {
+.grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 20px;
+  gap: 20px;
 }
-.file-item {
+
+.grid-item {
   border: 1px solid #ccc;
   padding: 10px;
-  text-align: center;
-}
-.file-name {
-  font-weight: bold;
-}
-.file-date {
-  color: #888;
-}
-.view-link {
-  display: block;
-  margin-top: 10px;
 }

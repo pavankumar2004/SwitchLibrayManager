@@ -1,0 +1,28 @@
+const mongoose = require('mongoose');
+const Versions = require('../models/Versions');
+const axios = require('axios');
+
+async function updateVersions() {
+  let titlesCount = 0; // Initialize titlesCount to track the number of titles processed
+  try {
+
+    const response = await axios.get('https://tinfoil.media/repo/db/versions.json');
+    const jsonData = response.data;
+    
+        for (const key in jsonData) {
+            const dates = jsonData[key];
+            const newData = new Versions({
+                key: key,
+                dates: dates
+            });
+            await newData.save();
+        }
+
+  } catch (error) {
+    console.error('Failed to update database with new versions:', error.message);
+    console.error(error.stack);
+  }
+  return { titlesCount }; // Return titlesCount as part of an object at the end of the function
+}
+
+module.exports = updateVersions;

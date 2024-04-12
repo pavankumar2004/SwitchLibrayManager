@@ -13,7 +13,6 @@
                 <th>Name</th>
                 <th>Banner</th>
                 <th>Region</th>
-                <th>Version</th>
                 <th>Size</th>
                 <th>Release Date</th>
                 <th>Related</th>
@@ -26,7 +25,6 @@
                         <td><%= game.name %></td>
                         <td><img src="<%= game.bannerUrl %>" alt="Game Banner" style="width: 100px; height: 100px;"></td>
                         <td><%= game.region %></td>
-                        <td><%= game.version %></td>
                         <td data-size="<%= game.size %>"><%= game.size %></td>
                         <td><%= game.releaseDate %></td>
                         <td><a href="/related/<%= game.titleId.substring(0, 12) %>">View Related</a></td>

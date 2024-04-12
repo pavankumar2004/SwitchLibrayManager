@@ -10,28 +10,38 @@
         <p><strong>Title:</strong> <%= game.name %></p>
         <p><strong>Release Date:</strong> <%= game.releaseDate %></p>
         <p><strong>Description:</strong> <%= game.description %></p>
+        <% if (game.screenshots.length > 0) { %>
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Screenshots</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% game.screenshots.forEach(function(screenshots) { %>
+
+                            <td><img src="<%= screenshots %>" alt="Game Screenshot" style="width: 100px; height: 100px;"></td>
+
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+            <% } %>       
     </div>
-    <% if (updates.length > 0) { %>
-    <div>
-        <h3>Updates</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Version</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% updates.forEach(function(update) { %>
-                <tr>
-                    <td><%= update.titleId %></td>
-                    <td><%= update.version %></td>
-                </tr>
-                <% }); %>
-            </tbody>
-        </table>
-    </div>
-    <% } %>
+    <% versions.forEach(function(version) { %>
+        <div>
+          <h2><%= version.key %></h2>
+          <ul>
+            <% version.dates.forEach(function(date) { %>
+              <li>
+                Build ID: <%= date.key %><br>
+                Date: <%= date.value %>
+              </li>
+            <% }) %>
+          </ul>
+        </div>
+    <% }) %>    
     <% if (dlcs.length > 0) { %>
     <div>
         <h3>DLC</h3>

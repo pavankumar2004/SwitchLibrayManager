@@ -1,9 +1,11 @@
 const express = require('express');
 const Game = require('../models/Game');
-const Update = require('../models/Update');
 const DLC = require('../models/DLC');
 const Misc = require('../models/Misc');
+const Versions = require('../models/Versions');
+
 const updateDatabase = require('../utils/updateDatabase'); // Import the updateDatabase function
+const updateVersions = require('../utils/updateVersions');
 const progressTracker = require('../utils/progressTracker'); // Import the progressTracker module
 const router = express.Router();
 
@@ -76,7 +78,6 @@ router.post('/update-titles', async (req, res) => {
   try {
     // Drop existing collections before updating
     await Game.deleteMany({});
-    await Update.deleteMany({});
     await DLC.deleteMany({});
     await Misc.deleteMany({});
     console.log("Existing collections dropped successfully.");
@@ -94,6 +95,21 @@ router.post('/update-titles', async (req, res) => {
     res.status(500).send('Failed to update database');
   }
 });
+
+router.post('/update-versions', async (req, res) => {
+  try {
+    // Drop existing collections before updating
+    // Trigger database update\
+    console.log("Versions update process triggered successfully.");
+    await updateVersions();
+    res.json({ message: 'Versions update triggered successfully' });
+  } catch (error) {
+    console.error('Failed to update versions:', error);
+    console.error(error.stack);
+    res.status(500).send('Failed to update versions');
+  }
+});
+
 
 // Route to get the current progress of the database update
 router.get('/update-progress', (req, res) => {
@@ -114,10 +130,19 @@ router.get('/related/:titleId', async (req, res) => {
   const regex = new RegExp(`^${titleIdPrefix}`);
   try {
     const game = await Game.findOne({ titleId: regex });
-    const updates = await Update.find({ titleId: regex });
     const dlcs = await DLC.find({ titleId: regex });
     const miscs = await Misc.find({ titleId: regex });
-    res.render('related', { game, updates, dlcs, miscs });
+    const versions = await Versions.find({ key: regex });
+
+    // Convert the Map to an array of key-value pairs
+    versions.forEach(version => {
+      version.dates = Array.from(version.dates, ([key, value]) => ({ key, value }));
+      console.log(version.dates);
+    });
+
+
+// Pass the modified versions data to the view
+    res.render('related', { game, versions, dlcs, miscs });
   } catch (error) {
     console.error('Failed to fetch related items:', error.message, error.stack);
     res.status(500).send('Failed to load related items. Please try again later.');
