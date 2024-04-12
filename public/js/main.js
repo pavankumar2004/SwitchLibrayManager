@@ -1,5 +1,5 @@
 function updateTitles() {
-  console.log('Attempting to update game titles...');
+  console.log('Attempting to update titles...');
   // Disable the update button
   document.getElementById('updateDatabaseButton').disabled = true;
 
@@ -24,6 +24,30 @@ function updateTitles() {
   }).finally(() => {
     // Re-enable the update button
     document.getElementById('updateDatabaseButton').disabled = false;
+  });
+}
+
+function updateVersions() {
+  console.log('Attempting to update game versions...');
+  // Disable the update button
+  document.getElementById('updateVersionsButton').disabled = true;
+
+  fetch('/update-versions', {
+    method: 'POST'
+  }).then(response => {
+    if (response.ok) {
+      console.log('Response received. Parsing...');
+      return response.json();
+    }
+    throw new Error('Network response was not ok.');
+  }).then(data => {
+    console.log('Update successful:', data);
+  }).catch(error => {
+    console.error('Failed to update game versions:', error);
+    alert('Failed to update game versions. Please try again.');
+  }).finally(() => {
+    // Re-enable the update button
+    document.getElementById('updateVersionsButton').disabled = false;
   });
 }
 
@@ -58,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const updateButton = document.getElementById('updateDatabaseButton');
   if (updateButton) {
     updateButton.addEventListener('click', () => {
-      updateTitles();
+      updateVersions();
       // Start polling for progress updates for each category
       const intervalId = setInterval(() => {
         fetch('/update-progress')
@@ -81,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 1000);
     });
   }
+
 
   // Format game sizes
   const sizeElements = document.querySelectorAll('[data-size]');

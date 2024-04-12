@@ -1,7 +1,6 @@
 const axios = require('axios');
 const mongoose = require('mongoose');
 const Game = require('../models/Game');
-const Update = require('../models/Update');
 const DLC = require('../models/DLC');
 const Misc = require('../models/Misc'); // Added for handling titles with invalid IDs
 const progressTracker = require('./progressTracker'); // Import progressTracker module
@@ -25,7 +24,6 @@ async function updateDatabase() {
     // Reset progress for each category
     progressTracker.setProgress( 0, 'games' );
     const gameOps = [];
-    const updateOps = [];
     const dlcOps = [];
     const miscOps = []; // Added for handling titles with invalid IDs
 
@@ -33,14 +31,6 @@ async function updateDatabase() {
     titlesArray.forEach((title, index) => {
       if (title.id && title.id.endsWith('000')) {
         gameOps.push({
-          updateOne: {
-            filter: { titleId: title.id },
-            update: { $set: title },
-            upsert: true
-          }
-        });
-      } else if (title.id && title.id.endsWith('800')) {
-        updateOps.push({
           updateOne: {
             filter: { titleId: title.id },
             update: { $set: title },
@@ -77,11 +67,6 @@ async function updateDatabase() {
     if (updateOps.length > 0) {
       await Update.bulkWrite(updateOps);
     }
-    updateCount = updateCount + updateOps.length;
-    progressTracker.setProgress( (updateCount/ titlesCount) * 100, 'updates' );
-    if (dlcOps.length > 0) {
-      await DLC.bulkWrite(dlcOps);
-    }
     updateCount = updateCount + dlcOps.length;
     progressTracker.setProgress( (updateCount / titlesCount) * 100, 'dlc' );
     if (miscOps.length > 0) {
@@ -91,7 +76,6 @@ async function updateDatabase() {
     progressTracker.setProgress( (updateCount / titlesCount) * 100, 'misc' );
 
     console.log(`Games updated/inserted: ${gameOps.length}`);
-    console.log(`Updates updated/inserted: ${updateOps.length}`);
     console.log(`DLCs updated/inserted: ${dlcOps.length}`);
     console.log(`Misc titles updated/inserted: ${miscOps.length}`); // Logging the number of Misc titles processed
   } catch (error) {
